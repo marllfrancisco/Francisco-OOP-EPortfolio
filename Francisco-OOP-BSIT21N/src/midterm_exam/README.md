@@ -7,7 +7,7 @@ Polytechnic University of the Philippines - Sta. Mesa
 April 22, 2026
 
 ✔️ **Score:**
-*not announced yet*
+87/100
 
 
 ## Reflection:
