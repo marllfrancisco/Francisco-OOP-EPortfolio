@@ -1,12 +1,13 @@
 // Marl Louie T. Francisco | BSIT 2-1N
 // Midterm Activity # 3 - ATM w/ Transaction Counter
+// UPDATED 06/10/26!
 
 //my package
 package midterm_activities.activity3;
 
 // necessary imports -------------------------------------------------------
 import java.io.Console;
-import java.util.Scanner;
+import java.util.*; // for input mismatch and scanner
 
 public class SecureATMSystemFrancisco {
 
@@ -53,19 +54,26 @@ public class SecureATMSystemFrancisco {
 			
         // ATM system main menu --------------------------------------------
         double balance = 5000; // starting balance
-        int choice;
-        
-        // do-whiled
-        do {
-            System.out.println("\n===== ATM MENU =====");
-            System.out.println("1. Check Balance");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. Exit");
-            System.out.print("\nChoose option: ");
+        int choice = 0; // needs to be initialized
+    	// do-whiled
+    	do {
+    		// try - handling string input
+    		try {
+	            System.out.println("\n===== ATM MENU =====");
+	            System.out.println("1. Check Balance");
+	            System.out.println("2. Deposit");
+	            System.out.println("3. Withdraw");
+	            System.out.println("4. Exit");
+	            System.out.print("\nChoose option: ");
 
-            choice = sc.nextInt();
+	            choice = sc.nextInt();
             
+    		} catch (InputMismatchException e) {
+    		    System.out.println("Numbers only!");
+    		    sc.nextLine(); // this clears the invalid line
+    		    continue; // go to next iteration
+    		}
+           
             // options (switch) --------------------------------------------
             switch (choice) {
             	// balance
@@ -75,39 +83,53 @@ public class SecureATMSystemFrancisco {
                     
                 // deposit
                 case 2:
-                    System.out.print("Enter deposit amount: ");
-                    double deposit = sc.nextDouble();
-                    
-                    if (deposit > 0) {
-                    	balance += deposit;
-                    	System.out.println("Deposit successful.");
-                    } else {
-                    	System.out.println("Invalid value.");
-                    }
-                    break;
-                
+                	try {
+                	    System.out.print("Enter deposit amount: ");
+                	    double deposit = sc.nextDouble();
+                	    
+                	    if (deposit > 0) {
+                        	balance += deposit;
+                        	System.out.println("Deposit successful.");
+                        } else {
+                        	System.out.println("Invalid value.");
+                        }
+                        break;
+                        
+                	} catch (InputMismatchException e) {
+                	    System.out.println("Numbers only!");
+                	    sc.nextLine();
+                	    break;
+                	}
+                	
                 // withdraw
                 case 3:
-                    System.out.print("Enter withdrawal amount: ");
-                    double withdraw = sc.nextDouble();
-
-                    // Withdraw VALIDATION - (nested if)
-                    if (withdraw > 0) {
-                        if (withdraw <= 2000) {
-                            if (withdraw <= balance) {
-                                balance -= withdraw;
-                                System.out.println("Withdrawal successful.");
+                	try {
+                		System.out.print("Enter withdrawal amount: ");
+                        double withdraw = sc.nextDouble();
+                	    
+                        // Withdraw VALIDATION - (nested if)
+                        if (withdraw > 0) {
+                            if (withdraw <= 2000) {
+                                if (withdraw <= balance) {
+                                    balance -= withdraw;
+                                    System.out.println("Withdrawal successful.");
+                                } else {
+                                    System.out.println("Insufficient balance.");
+                                }
                             } else {
-                                System.out.println("Insufficient balance.");
+                                System.out.println("Max withdrawal is 2000 only.");
                             }
                         } else {
-                            System.out.println("Max withdrawal is 2000 only.");
+                            System.out.println("Invalid amount.");
                         }
-                    } else {
-                        System.out.println("Invalid amount.");
-                    }
-                    break; 
-                
+                        break; 
+                	           
+                	} catch (InputMismatchException e) {
+                	    System.out.println("Numbers only!");
+                	    sc.nextLine();
+                	    break;
+                	}
+       
                 // exit
                 case 4:
                     System.out.println("Program terminating...");
@@ -117,8 +139,10 @@ public class SecureATMSystemFrancisco {
                 default:
                     System.out.println("Invalid choice.");
             }
-
+            
+         // this expects choice has value hence needs to be initialized first
         } while (choice != 4);
+
  
         sc.close();
 	}
