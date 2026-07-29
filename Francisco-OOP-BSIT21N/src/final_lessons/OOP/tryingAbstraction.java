@@ -16,7 +16,7 @@ abstract class Human {
 
 class Female extends Human {
 
-	// since walk is abstract, it is REQUIRED in every subclasses
+	// since walk() is abstract, it is REQUIRED in every subclasses
 	@Override
 	void walk() {
 		System.out.println("The female has begun to walk");

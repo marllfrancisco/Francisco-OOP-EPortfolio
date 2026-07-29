@@ -8,8 +8,7 @@ package final_lessons.OOP;
 
 class Vehicle {
 	void go() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Moved");
 	}
 }
 
